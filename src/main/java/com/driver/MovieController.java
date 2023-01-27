@@ -61,4 +61,19 @@ public class MovieController {
             return new ResponseEntity<>("No movie in the database", HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(response, HttpStatus.FOUND);
     }
+
+    @DeleteMapping("/delete-director-by-name")
+    public ResponseEntity deleteDirectorByName(@RequestParam("director") String name){
+        String response = movieService.deleteDirectorByName(name);
+        if(response==null)
+            return new ResponseEntity<>("Director did not have any movie", HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(response, HttpStatus.FOUND);
+    }
+
+    @DeleteMapping("/delete-all-directors")
+    public ResponseEntity deleteAllDirectors(){
+        movieService.deleteAllDirectors();
+        return new ResponseEntity<>("Successfully delete", HttpStatus.FOUND);
+    }
 }

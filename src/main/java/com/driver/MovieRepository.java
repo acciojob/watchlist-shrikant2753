@@ -53,4 +53,35 @@ public class MovieRepository {
     public List<String> findAllMovies(){
         return new ArrayList<>(movies.keySet());
     }
+
+    public String deleteDirectorByName(String director){
+        if(!directors.containsKey(director))
+            return null;
+        List<String>movieD = new ArrayList<>();
+        directors.remove(director);
+        for(String movieToBeDeleted : movieDirector.get(director)){
+            movieD.add(movieToBeDeleted);
+        }
+        for (String movieName : movieD){
+            movies.remove(movieName);
+        }
+        movieDirector.remove(director);
+        return "Director and its movies deleted Successfully";
+    }
+
+    public void deleteAllDirectors(){
+        HashSet<String> movieSet = new HashSet<>();
+        for(String director : movieDirector.keySet()){
+            for(String movieName : movieDirector.get(director)){
+                movieSet.add(movieName);
+            }
+        }
+
+        for(String movieName : movieSet){
+            if(movies.containsKey(movieName))
+                movies.remove(movieName);
+        }
+        movieDirector.clear();
+        directors.clear();
+    }
 }
